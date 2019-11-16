@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+
+    <meta charset="UTF-8">
+    <title>Sign-Up Today!</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <br>
+
+        <!-- Jumbotron -->
+        <div class="jumbotron">
+            <h1 class="text-center">Anytime is Train Time</h1>
+            <h3 class="text-center">Choo Choo. Chee Chee.</h3>
+        </div>
+        <div class="row">
+            
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>Current Train Schedule</h4>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-bordered" id="trainTable">
+                        <tr>
+                            <th> Train Name </th>
+                            <th> Destination </th>
+                            <th> Frequency </th>
+                            <th> Next Arrival </th>
+                            <th> Minutes Away </th><br />
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="col-lg-6">
+                <div class="card card-default">
+                  <div class="card-header">
+
+            <form role="form">
+                <div class="form-group row">
+                    <label for="trainName-input">Train Name:</label>
+                    <input class="form-control" id="trainName-input" type="text">
+                    
+                </div>
+                <div class="form-group row">
+                    <label for="destination-input">Destination</label>
+                    <input class="form-control" id="destination-input" type="text">
+                </div>
+                <div class="form-group row">
+                    <label for="firstTrainTime-input">First Train Time (HHmm-Military Time)</label>
+                    <input class="form-control" id="firstTrainTime-input" type="time">
+
+                </div>
+                <div class="form-group row">
+                    <label for="frequency-input">Frequency</label>
+                    <input class="form-control" id="frequency-input"></input>
+                </div>
+                <button class="btn btn-default" id="add-train" type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+    </div>
+
+    </div>
+
+    </div>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+
+    <!-- LINKS FOR FIREBASE GO HERE -->
+    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>
+
+    <script>
+        // START CODING BELOW!!
+
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyAbVbA-9p2JvOil2L7uWx6M28-XDa9d_Bs",
+            authDomain: "traintime-2834c.firebaseapp.com",
+            databaseURL: "https://traintime-2834c.firebaseio.com",
+            projectId: "traintime-2834c",
+            storageBucket: "traintime-2834c.appspot.com",
+            messagingSenderId: "551060183769",
+            appId: "1:551060183769:web:a6ae3c458e4e5eaecabcc8"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // Create a variable to reference the database
+        var database = firebase.database();
+
+        // Initial Values
+        var trainName = "";
+        var destination = "";
+        var firstTrainTime = 0;
+        var firstTrainTime = "";
+
+        // Capture Button Click
+        $("#add-train").on("click", function (event) {
+            // Don't refresh the page!
+            event.preventDefault();
+
+            
+            trainName = $("#trainName-input").val().trim();
+            destination = $("#destination-input").val().trim();
+            firstTrainTime = $("#firstTrainTime-input").val().trim();
+            frequency = $("#frequency-input").val().trim();
+
+            database.ref().set({
+                trainName: trainName,
+                destination: destination,
+                firstTrainTime: firstTrainTime,
+                frequency: frequency
+            });
+
+        });
+
+        // Firebase watcher + initial loader HINT: .on("value")
+        // database.ref().on("value", function(snapshot) {
+
+        //   // Log everything that's coming out of snapshot
+        //   console.log(snapshot.val());
+        //   console.log(snapshot.val().trainName);
+        //   console.log(snapshot.val().destination);
+        //   console.log(snapshot.val().firstTrainTime);
+        //   console.log(snapshot.val().frequency);
+
+        //   // Change the HTML to reflect
+        // $("#trainName-display").text(snapshot.val().trainName);
+        // $("#destination-display").text(snapshot.val().destination);
+        // $("#firstTrainTime-display").text(snapshot.val().firstTrainTime);
+        // $("#frequency-display").text(snapshot.val().frequency);
+
+    //   // Handle the errors
+    // }, function(errorObject) {
+    //   console.log("Errors handled: " + errorObject.code);
+    // });
+
+    </script>
+
+</body>
+
+</html>
